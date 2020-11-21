@@ -1,0 +1,19 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+	int num, count = 0;
+	cout << "num: ";
+	cin >> num;
+	
+	for(int x = 1 ; x <= num ; x++)
+	{
+		if(x%3==0 || x%7==0)
+			continue;
+		
+		cout << x << '\t';
+		count++;
+		if(count%5==0)
+		cout << endl;
+	}
+}  
