@@ -1,0 +1,105 @@
+void setup()
+{
+  pinMode(8, OUTPUT);
+  pinMode(9, OUTPUT);
+  pinMode(10, OUTPUT);
+  Serial.begin(115200);
+}
+
+void loop()
+{
+  if(Serial.available())
+  {
+    float I = Serial.parseFloat(); // 油量單位換算
+    char A = Serial.read(); // 油量單位公升(L) 美加侖(S) 英加侖(K)
+    
+    if(A=='L' || A=='l') // 輸入單位為公升L 
+    {
+      Serial.print("the gasoline is : ");
+      Serial.print(I);
+      Serial.println(" liter");
+      
+      
+      Serial.print("the gasoline is : ");
+      Serial.print(I * 0.26418);
+      Serial.println(" US gallon");
+      
+      Serial.print("the gasoline is : ");
+      Serial.print(I * 0.21998);
+      Serial.println(" UK gallon");
+      
+    }
+    else if(A=='S' || A=='s') // 輸入單位為美制加侖S
+    {
+      Serial.print("the gasoline is : ");
+      Serial.print(I);
+      Serial.println(" US gallon");
+      
+      
+      Serial.print("the gasoline is : ");
+      Serial.print(I * 3.78533);
+      Serial.println(" liter");
+      
+      Serial.print("the gasoline is : ");
+      Serial.print(I * 0.83268);
+      Serial.println(" UK gallon");
+    }
+    else if(A=='K' || A=='k') // 輸入單位為英制加侖K
+    {
+      Serial.print("the gasoline is : ");
+      Serial.print(I);
+      Serial.println(" UK gallon");
+      
+      
+      Serial.print("the gasoline is : ");
+      Serial.print(I * 4.54596);
+      Serial.println(" liter");
+      
+      Serial.print("the gasoline is : ");
+      Serial.print(I * 1.20094);
+      Serial.println(" US gallon");
+    }
+    else
+    {
+      Serial.println(" vnu"); 
+    }
+
+    // 油量比
+    
+    if((0 <= I) && (I < 30))
+    {
+      digitalWrite(8, HIGH);
+      digitalWrite(9, LOW);
+      digitalWrite(10, LOW);
+      
+      Serial.println("the gasoline is not enough");
+      Serial.println("Please find a gas station");
+    }
+    
+    else if((30 <= I) && (I < 90))
+    {
+      digitalWrite(8, LOW);
+      digitalWrite(9, HIGH);
+      digitalWrite(10, LOW);
+      
+      Serial.println("the gasoline is  enough");
+      Serial.println("Keep going");
+    }
+    
+    else if(90 <= I)
+    {
+      digitalWrite(8, LOW);
+      digitalWrite(9, LOW);
+      digitalWrite(10, HIGH);
+      
+      Serial.println("the gasoline is very enough");
+      Serial.println("Good trip!!!");
+    }
+    else
+    {
+      Serial.print("The gasoline is: ");
+      Serial.println(" vnu"); 
+    }
+
+  }
+}
